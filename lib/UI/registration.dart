@@ -57,7 +57,7 @@ class Registration extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        width: 450,
+                        width: screenWidth * 0.3,
                         child: TextField(
                             decoration: InputDecoration(
                           labelText: 'Email',
@@ -79,7 +79,7 @@ class Registration extends StatelessWidget {
                         ))),
                     const SizedBox(height: 16),
                     Container(
-                        width: 450,
+                        width: screenWidth * 0.3,
                         child: TextField(
                             decoration: InputDecoration(
                           labelText: 'Password',
@@ -99,12 +99,29 @@ class Registration extends StatelessWidget {
                                 color: Color.fromARGB(255, 11, 49, 13)),
                           ),
                         ))),
+                    const SizedBox(height: 14),
+                    InkWell(
+                      child: Text(
+                        'Forget Password?',
+                        style: TextStyle(color: Colors.green[900]),
+                      ),
+                    ),
                     const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(),
+                    SizedBox(
+                      width: screenWidth * 0.3,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            backgroundColor: utils.pimaryColor),
+                        onPressed: () {},
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              color: Colors.green[900],
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
                     )
                   ],
