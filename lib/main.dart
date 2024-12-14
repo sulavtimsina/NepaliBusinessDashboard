@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nepalibussiness/UI/AddingInfo.dart';
+import 'package:nepalibussiness/UI/dashboard.dart';
 import 'package:nepalibussiness/UI/registration.dart';
 
 void main() async {
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nepali',
-      home: Registration(),
+      home: Addinginfo(),
     );
   }
 }
