@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nepalibussiness/model/file_DataModel.dart';
+import 'package:nepalibussiness/utils/DropZoneWidget.dart';
+import 'package:nepalibussiness/utils/DroppedFileWidget.dart';
 import 'package:nepalibussiness/utils/utils.dart';
 
 class Addinginfo extends StatefulWidget {
@@ -9,53 +12,156 @@ class Addinginfo extends StatefulWidget {
 }
 
 class _AddinginfoState extends State<Addinginfo> {
+  File_Data_Model? file;
+
   @override
   Widget build(BuildContext context) {
-    Utils utils = new Utils();
+    Utils utils = Utils();
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
+
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: screenWidth * 1.0,
-            height: screenHeight * 0.15,
-            color: utils.pimaryColor,
-            child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Center align the text
-              mainAxisAlignment: MainAxisAlignment.center, // Center vertically
-              children: [
-                Text(
-                  utils.name.toString(),
-                  style: TextStyle(
-                      color: utils.textColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Header
+            Container(
+              width: double.infinity,
+              height: 120,
+              color: utils.pimaryColor,
+              alignment: Alignment.center,
+              child: Text(
+                utils.name,
+                style: TextStyle(
+                  color: utils.textColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 ),
-                Text(
-                  utils.detail,
-                  style: TextStyle(
-                    color: utils.textColor,
-                    fontWeight: FontWeight.w100,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Center(
+            // Form and File Widgets
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Container(
-                  height: screenHeight * 0.75,
-                  width: screenWidth * 0.85,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: utils.pimaryColor, width: 3.0),
-                      borderRadius: BorderRadius.circular(10))),
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  border: Border.all(color: utils.textColor, width: 1.0),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    // File Drop Widgets Row
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: screenHeight * 0.3,
+                            child: DroppedFileWidget(file: file),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: DropZoneWidget(
+                            onDroppedFile: (file) =>
+                                setState(() => this.file = file),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    // Input Fields
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: screenWidth * 0.3,
+                          child: TextFormField(
+                            decoration: InputDecoration(labelText: 'Name'),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Container(
+                          width: screenWidth * 0.3,
+                          child: TextFormField(
+                            decoration: InputDecoration(labelText: 'Category'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: screenWidth * 0.3,
+                          child: TextFormField(
+                            decoration: InputDecoration(labelText: 'Location'),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Container(
+                          width: screenWidth * 0.3,
+                          child: TextFormField(
+                            decoration:
+                                InputDecoration(labelText: 'Description'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    // Rating Section
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text(
+                            'Rating:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Row(
+                          children: List.generate(
+                            5,
+                            (index) => Icon(Icons.star_border, size: 30),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    // Add Button
+                    SizedBox(
+                      width: screenWidth * 0.25,
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: utils.pimaryColor,
+                        ),
+                        onPressed: () {
+                          // Add your functionality here
+                        },
+                        child: Text(
+                          'Add',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
