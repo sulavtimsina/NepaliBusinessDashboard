@@ -19,11 +19,9 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get the screen size
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // Set responsive dimensions
     final widgetWidth = screenWidth * 0.8; // 80% of screen width
     final widgetHeight = screenHeight * 0.3; // 30% of screen height
 
@@ -42,25 +40,24 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
               ),
               Center(
                 child: SingleChildScrollView(
-                  // Allow scrolling if content overflows
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.cloud_upload_outlined,
                         size:
-                            widgetHeight * 0.4, // Icon size adjusted to height
+                            widgetHeight * 0.4, 
                         color: Colors.white,
                       ),
                       Text(
                         'Drop Files Here',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: widgetHeight * 0.1, // Responsive font size
+                          fontSize: widgetHeight * 0.1, 
                         ),
                       ),
                       SizedBox(
-                        height: widgetHeight * 0.05, // Adjust spacing
+                        height: widgetHeight * 0.05, 
                       ),
                       ElevatedButton.icon(
                         onPressed: () async {
@@ -70,14 +67,14 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
                         },
                         icon: Icon(
                           Icons.search,
-                          size: widgetHeight * 0.1, // Responsive icon size
+                          size: widgetHeight * 0.1, 
                         ),
                         label: Text(
                           'Choose File',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize:
-                                widgetHeight * 0.08, // Responsive font size
+                                widgetHeight * 0.08, 
                           ),
                         ),
                         style: ElevatedButton.styleFrom(

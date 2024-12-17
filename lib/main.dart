@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nepalibussiness/UI/dashboard.dart';
+import 'package:nepalibussiness/UI/registration.dart';
+import 'package:nepalibussiness/bloc/app/bloc/app_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,10 +29,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Nepali',
-      home: Dashboard(),
+    return BlocProvider(
+      create: (_) => AppBloc(),
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Nepali',
+        home: Registration(),
+      ),
     );
   }
 }
