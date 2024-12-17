@@ -21,6 +21,8 @@ class _RegistrationState extends State<Registration> {
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
     return BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+      bool isLoading = state.isLoading;
+
       if (state is AppStateLoggedIn) {
         return Dashboard();
       }
@@ -72,7 +74,7 @@ class _RegistrationState extends State<Registration> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                             width: screenWidth * 0.3,
                             child: TextField(
                                 controller: emailController,
@@ -152,6 +154,7 @@ class _RegistrationState extends State<Registration> {
                         ),
                         const SizedBox(height: 24),
                         SizedBox(
+                          height: 45,
                           width: screenWidth * 0.3,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -159,17 +162,20 @@ class _RegistrationState extends State<Registration> {
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
                                 backgroundColor: utils.pimaryColor),
-                            onPressed: () {
-                              context.read<AppBloc>().add(AppEventLogIn(
-                                  email: emailController.text,
-                                  password: passwordController.text));
-                            },
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                  color: Colors.green[900],
-                                  fontWeight: FontWeight.w500),
-                            ),
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    context.read<AppBloc>().add(AppEventLogIn(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        ));
+                                  },
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 3,
+                                  )
+                                : const Text('Login'),
                           ),
                         )
                       ],

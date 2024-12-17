@@ -8,7 +8,10 @@ import 'package:nepalibussiness/auth/auth_error.dart';
 part 'app_event.dart';
 part 'app_state.dart';
 
+// app_bloc.dart
 class AppBloc extends Bloc<AppEvent, AppState> {
+  bool isPasswordVisible = false;
+
   AppBloc() : super(AppStateLoggedOut(isLoading: false, successful: false)) {
     on<AppEventLogIn>((event, emit) async {
       emit(AppStateLoggedOut(isLoading: true, successful: false));
@@ -28,7 +31,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       try {
         await Auth().signOut();
         emit(AppStateLoggedOut(isLoading: false, successful: true));
-        // ignore: unused_catch_clause
       } on FirebaseAuthException catch (e) {}
     });
 

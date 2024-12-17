@@ -9,7 +9,7 @@ class AppEventLogOut extends AppEvent {
   const AppEventLogOut();
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 @immutable
@@ -20,6 +20,7 @@ class AppEventLogIn extends AppEvent {
     required this.email,
     required this.password,
   });
+
   @override
   List<Object?> get props => [email, password];
 }
@@ -43,4 +44,10 @@ class AppEventResetPassword extends AppEvent {
 
   @override
   List<Object?> get props => [email];
+}
+
+@immutable
+class AppEventTogglePasswordVisibility extends AppEvent {
+  @override
+  List<Object?> get props => [];
 }

@@ -11,7 +11,7 @@ class AppStateLoggedIn extends AppState {
     required isLoading,
     required successful,
   }) : super(isLoading: isLoading, successful: successful);
-  
+
   @override
   // TODO: implement props
   List<Object?> get props => [isLoading, successful];
@@ -22,8 +22,22 @@ class AppStateLoggedOut extends AppState {
     required isLoading,
     required successful,
   }) : super(isLoading: isLoading, successful: successful);
-  
+
   @override
   // TODO: implement props
   List<Object?> get props => [isLoading, successful];
+}
+
+class AppStatePasswordVisibilityChanged extends AppState {
+  final bool isPasswordVisible;
+
+  AppStatePasswordVisibilityChanged({
+    required bool isLoading,
+    required bool successful,
+    required this.isPasswordVisible,
+  }) : super(isLoading: isLoading, successful: successful);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [isLoading, successful, isPasswordVisible];
 }
