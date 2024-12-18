@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nepalibussiness/controllers/service_info_controller.dart';
 import 'package:nepalibussiness/model/file_DataModel.dart';
 import 'package:nepalibussiness/utils/DropZoneWidget.dart';
 import 'package:nepalibussiness/utils/DroppedFileWidget.dart';
@@ -20,6 +22,8 @@ class _AddinginfoState extends State<Addinginfo> {
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
+    final ServiceInfoController services_controller =
+        Get.put(ServiceInfoController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -51,11 +55,10 @@ class _AddinginfoState extends State<Addinginfo> {
                 ),
                 child: Column(
                   children: [
-                    // File Drop Widgets Row
                     Row(
                       children: [
                         Expanded(
-                          child: Container(
+                          child: SizedBox(
                             height: screenHeight * 0.3,
                             child: DroppedFileWidget(file: file),
                           ),
@@ -75,17 +78,19 @@ class _AddinginfoState extends State<Addinginfo> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: screenWidth * 0.3,
                           child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Name'),
+                            decoration:
+                                const InputDecoration(labelText: 'Name'),
                           ),
                         ),
                         const SizedBox(width: 20),
-                        Container(
+                        SizedBox(
                           width: screenWidth * 0.3,
                           child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Category'),
+                            decoration:
+                                const InputDecoration(labelText: 'Category'),
                           ),
                         ),
                       ],
@@ -118,7 +123,7 @@ class _AddinginfoState extends State<Addinginfo> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          child: Text(
+                          child: const Text(
                             'Rating:',
                             style: TextStyle(
                               fontSize: 16,
@@ -130,7 +135,7 @@ class _AddinginfoState extends State<Addinginfo> {
                         Row(
                           children: List.generate(
                             5,
-                            (index) => Icon(Icons.star_border, size: 30),
+                            (index) => const Icon(Icons.star_border, size: 30),
                           ),
                         ),
                       ],
@@ -147,7 +152,7 @@ class _AddinginfoState extends State<Addinginfo> {
                         onPressed: () {
                           // Add your functionality here
                         },
-                        child: Text(
+                        child: const Text(
                           'Add',
                           style: TextStyle(
                             color: Colors.white,

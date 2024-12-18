@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:nepalibussiness/UI/registration.dart';
+import 'package:nepalibussiness/res/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +28,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Nepali',
-      home: Registration(),
-    );
+    return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Nepali',
+        home: Registration(),
+        getPages: AppRoutes.appRoutes());
   }
 }
