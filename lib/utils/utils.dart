@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class Utils {
   final pimaryColor = const Color(0xffC2E96A);
   final String name = 'Nepali Business';
   final String pageName = 'Admin Dashboard';
+  final String reset = 'Forget Password';
   final textColor = const Color(0xff114c2b);
   String get greeting => "Welcome to $name";
   String get greeting1 => "Welcome to $pageName";
   String get detail => "Add Details";
+
+  static toastMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+    );
+  }
+
+  static snackbar(String title, String message) {
+    Get.snackbar(title, message);
+  }
 }

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:nepalibussiness/UI/forget_password.dart';
-import 'package:nepalibussiness/controllers/login_controller.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:nepalibussiness/controllers/reset_password_controller.dart';
 import 'package:nepalibussiness/utils/utils.dart';
 
-class Registration extends StatefulWidget {
-  const Registration({super.key});
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({super.key});
 
   @override
-  State<Registration> createState() => _RegistrationState();
+  State<ForgetPassword> createState() => _ForgetPasswordState();
 }
 
-class _RegistrationState extends State<Registration> {
+class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     final Utils utils = Utils();
-    final LoginController loginController = Get.put(LoginController());
+    final ResetPasswordController resetController =
+        Get.put(ResetPasswordController());
 
     final screenSize = MediaQuery.of(context).size;
     final screenWidth = screenSize.width;
@@ -49,7 +51,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                 ),
                 Text(
-                  utils.pageName,
+                  utils.reset,
                   style: TextStyle(
                     color: utils.textColor,
                     fontWeight: FontWeight.w100,
@@ -70,7 +72,7 @@ class _RegistrationState extends State<Registration> {
                     SizedBox(
                       width: screenWidth * 0.3,
                       child: TextField(
-                        controller: loginController.emailController,
+                        controller: resetController.emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: 'Email',
@@ -91,60 +93,6 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: screenWidth * 0.3,
-                      child: Obx(
-                        () => TextField(
-                          controller: loginController.passwordController,
-                          keyboardType: TextInputType.text,
-                          obscureText: loginController
-                              .visiblePassword.value, // Bind visibility
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: utils.textColor),
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color: utils.textColor),
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Colors.grey),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 11, 49, 13)),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                loginController.visiblePassword.value
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: loginController.visiblePassword.value
-                                    ? Colors.grey.shade500
-                                    : utils.textColor,
-                              ),
-                              onPressed: () {
-                                loginController.visiblePassword.value =
-                                    !loginController.visiblePassword
-                                        .value; // Toggle visibility
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    InkWell(
-                      onTap: () {
-                        Get.to(ForgetPassword());
-                      },
-                      child: Text(
-                        'Forget Password?',
-                        style: TextStyle(color: Colors.green[900]),
-                      ),
-                    ),
                     const SizedBox(height: 24),
                     Obx(() {
                       return SizedBox(
@@ -157,17 +105,21 @@ class _RegistrationState extends State<Registration> {
                             ),
                             backgroundColor: utils.pimaryColor,
                           ),
-                          onPressed: loginController.isLoading.value
+                          onPressed: resetController.isLoading.value
                               ? null
-                              : loginController.signInWithEmailAndPassword,
-                          child: loginController.isLoading.value
+                              : resetController.sendResetPasswordEmail,
+                          child: resetController.isLoading.value
                               ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )
-                              : const Text('Login'),
+                              : const Text(
+                                  'Reset',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 26, 59, 27)),
+                                ),
                         ),
                       );
-                    }),
+                    })
                   ],
                 ),
               ),
