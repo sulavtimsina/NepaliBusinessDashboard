@@ -44,7 +44,6 @@ class _AddinginfoState extends State<Addinginfo> {
                 ),
               ),
             ),
-            // Form and File Widgets
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -73,7 +72,6 @@ class _AddinginfoState extends State<Addinginfo> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    // Input Fields
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,6 +79,7 @@ class _AddinginfoState extends State<Addinginfo> {
                         SizedBox(
                           width: screenWidth * 0.3,
                           child: TextFormField(
+                            controller: services_controller.name,
                             decoration:
                                 const InputDecoration(labelText: 'Name'),
                           ),
@@ -89,6 +88,7 @@ class _AddinginfoState extends State<Addinginfo> {
                         SizedBox(
                           width: screenWidth * 0.3,
                           child: TextFormField(
+                            controller: services_controller.category,
                             decoration:
                                 const InputDecoration(labelText: 'Category'),
                           ),
@@ -103,21 +103,23 @@ class _AddinginfoState extends State<Addinginfo> {
                         Container(
                           width: screenWidth * 0.3,
                           child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Location'),
+                            controller: services_controller.location,
+                            decoration:
+                                const InputDecoration(labelText: 'Location'),
                           ),
                         ),
                         const SizedBox(width: 20),
                         Container(
                           width: screenWidth * 0.3,
                           child: TextFormField(
+                            controller: services_controller.descrpition,
                             decoration:
-                                InputDecoration(labelText: 'Description'),
+                                const InputDecoration(labelText: 'Description'),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 20),
-                    // Rating Section
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,35 +134,48 @@ class _AddinginfoState extends State<Addinginfo> {
                           ),
                         ),
                         const SizedBox(width: 20),
-                        Row(
-                          children: List.generate(
-                            5,
-                            (index) => const Icon(Icons.star_border, size: 30),
-                          ),
-                        ),
+                        Obx(() => Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(5, (index) {
+                                return IconButton(
+                                  onPressed: () => services_controller
+                                      .updateRating(index + 1),
+                                  icon: Icon(
+                                    Icons.star,
+                                    color: (index <
+                                            services_controller
+                                                .selectedRating.value)
+                                        ? Colors.amber
+                                        : Colors.grey,
+                                  ),
+                                  iconSize: 40,
+                                );
+                              }),
+                            )),
                       ],
                     ),
                     const SizedBox(height: 20),
-                    // Add Button
                     SizedBox(
-                      width: screenWidth * 0.25,
-                      height: 45,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: utils.pimaryColor,
-                        ),
-                        onPressed: () {
-                          // Add your functionality here
-                        },
-                        child: const Text(
-                          'Add',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                        width: screenWidth * 0.25,
+                        height: 45,
+                        child: Obx(() {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: utils.pimaryColor,
+                            ),
+                            onPressed:
+                                services_controller.isSaveButtonEnabled.value
+                                    ? services_controller.saveDataToFirestore
+                                    : null,
+                            child: const Text(
+                              'Add',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 32, 77, 34),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        })),
                   ],
                 ),
               ),

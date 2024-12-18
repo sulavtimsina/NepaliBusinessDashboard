@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nepalibussiness/UI/forget_password.dart';
 import 'package:nepalibussiness/controllers/login_controller.dart';
 import 'package:nepalibussiness/utils/utils.dart';
 
@@ -138,7 +137,7 @@ class _RegistrationState extends State<Registration> {
                     const SizedBox(height: 14),
                     InkWell(
                       onTap: () {
-                        Get.to(ForgetPassword());
+                        Get.toNamed('/reset');
                       },
                       child: Text(
                         'Forget Password?',

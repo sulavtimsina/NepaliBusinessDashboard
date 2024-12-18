@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nepalibussiness/UI/dashboard.dart';
 
 class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -19,6 +18,12 @@ class LoginController extends GetxController {
   Future<void> signInWithEmailAndPassword() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
+    @override
+    void onInit() {
+      emailController.clear();
+      passwordController.clear();
+      super.onInit();
+    }
 
     // Validate fields
     if (email.isEmpty || password.isEmpty) {
@@ -35,7 +40,7 @@ class LoginController extends GetxController {
       isLoading.value = true;
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      Get.to(Dashboard());
+      Get.toNamed('/dashboard');
     } on FirebaseAuthException catch (e) {
       // Handle specific Firebase exceptions
       if (e.code == 'user-not-found') {
