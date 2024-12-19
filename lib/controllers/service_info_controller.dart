@@ -49,6 +49,20 @@ class ServiceInfoController extends GetxController {
     });
   }
 
+  Future<void> deleteBusiness(String documentId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Business') // Replace with your collection
+          .doc(documentId)
+          .delete();
+      businessData.removeWhere((business) => business['id'] == documentId);
+
+      Get.snackbar('Success', 'Business deleted successfully.');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to delete business: $e');
+    }
+  }
+
   Future<void> saveDataToFirestore() async {
     if (!isSaveButtonEnabled.value) return;
 

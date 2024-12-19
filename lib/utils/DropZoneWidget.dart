@@ -55,8 +55,15 @@ class DropZoneWidget extends StatelessWidget {
                             UploadedFile(events.first);
                           }
                         },
-                        icon: const Icon(Icons.search),
-                        label: const Text('Choose File'),
+                        icon: const Icon(
+                          Icons.search,
+                          color: Color.fromARGB(255, 34, 92, 36),
+                        ),
+                        label: const Text(
+                          'Choose File',
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 34, 92, 36)),
+                        ),
                       ),
                     ],
                   ),

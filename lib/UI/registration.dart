@@ -161,9 +161,14 @@ class _RegistrationState extends State<Registration> {
                               : loginController.signInWithEmailAndPassword,
                           child: loginController.isLoading.value
                               ? const CircularProgressIndicator(
-                                  color: Colors.white,
+                                  color: Color.fromARGB(255, 32, 83, 34),
                                 )
-                              : const Text('Login'),
+                              : const Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 32, 83, 34),
+                                      fontWeight: FontWeight.bold),
+                                ),
                         ),
                       );
                     }),

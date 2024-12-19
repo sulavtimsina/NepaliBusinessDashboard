@@ -6,14 +6,14 @@ import 'package:nepalibussiness/utils/DropZoneWidget.dart';
 import 'package:nepalibussiness/utils/DroppedFileWidget.dart';
 import 'package:nepalibussiness/utils/utils.dart';
 
-class Addinginfo extends StatefulWidget {
-  const Addinginfo({super.key});
+class Editscreen extends StatefulWidget {
+  const Editscreen({super.key});
 
   @override
-  State<Addinginfo> createState() => _AddinginfoState();
+  State<Editscreen> createState() => _EditscreenState();
 }
 
-class _AddinginfoState extends State<Addinginfo> {
+class _EditscreenState extends State<Editscreen> {
   File_Data_Model? file;
 
   @override
@@ -224,7 +224,7 @@ class _AddinginfoState extends State<Addinginfo> {
                                     ? services_controller.saveDataToFirestore
                                     : null,
                             child: const Text(
-                              'Add',
+                              'Edit',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 32, 77, 34),
                                 fontWeight: FontWeight.bold,
