@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:nepalibussiness/UI/registration.dart';
+import 'package:nepalibussiness/controllers/filecontroller.dart';
 import 'package:nepalibussiness/res/routes/routes.dart';
 
 void main() async {
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(FileController());
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Nepali',

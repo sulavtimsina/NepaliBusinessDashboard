@@ -1,43 +1,45 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nepalibussiness/controllers/filecontroller.dart';
 import 'package:nepalibussiness/model/file_DataModel.dart';
 
 class DroppedFileWidget extends StatelessWidget {
-  final File_Data_Model? file;
+  DroppedFileWidget({Key? key}) : super(key: key);
 
-  const DroppedFileWidget({Key? key, required this.file}) : super(key: key);
+  final FileController fileController = Get.find<FileController>();
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
-    final screenHeight = screenSize.height;
 
-    return Center(
-      child: Container(
-        width: screenWidth * 0.35, // Fixed width for the container
-        height: screenHeight * 0.35, // Fixed height for the container
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200, // Background color
-          borderRadius: BorderRadius.circular(10), // Rounded corners
-          border: Border.all(
-            color: Colors.grey, // Border color
-            width: 2, // Border width
+    return Obx(() {
+      final file = fileController.selectedFile.value;
+      return Center(
+        child: Container(
+          width: screenSize.width * 0.35,
+          height: screenSize.height * 0.35,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.grey,
+              width: 2,
+            ),
           ),
+          child: file == null
+              ? buildEmptyFile('No Selected Image')
+              : buildImage(context, file),
         ),
-        child: file == null
-            ? buildEmptyFile('No Selected Image')
-            : buildImage(context),
-      ),
-    );
+      );
+    });
   }
 
-  Widget buildImage(BuildContext context) {
+  Widget buildImage(BuildContext context, File_Data_Model file) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Image.network(
-        file!.url,
-        fit: BoxFit.cover, // Ensure the image fills the container
+        file.url,
+        fit: BoxFit.cover,
         errorBuilder: (context, error, _) =>
             buildEmptyFile('Image Load Failed'),
         loadingBuilder: (context, child, progress) {

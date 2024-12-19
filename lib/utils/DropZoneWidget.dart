@@ -1,117 +1,90 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:dotted_border/dotted_border.dart';
+import 'package:get/get.dart';
+import 'package:nepalibussiness/controllers/filecontroller.dart';
 import 'package:nepalibussiness/model/file_DataModel.dart';
+import 'package:dotted_border/dotted_border.dart';
 
-class DropZoneWidget extends StatefulWidget {
-  final ValueChanged<File_Data_Model> onDroppedFile;
+class DropZoneWidget extends StatelessWidget {
+  DropZoneWidget({Key? key}) : super(key: key);
 
-  const DropZoneWidget({Key? key, required this.onDroppedFile})
-      : super(key: key);
-  @override
-  _DropZoneWidgetState createState() => _DropZoneWidgetState();
-}
-
-class _DropZoneWidgetState extends State<DropZoneWidget> {
-  late DropzoneViewController controller;
-  bool highlight = false;
+  final FileController fileController = Get.find<FileController>();
+  final Rx<DropzoneViewController?> dropzoneController =
+      Rx<DropzoneViewController?>(null);
+  final RxBool highlight = false.obs;
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    final widgetWidth = screenWidth * 0.8; // 80% of screen width
-    final widgetHeight = screenHeight * 0.3; // 30% of screen height
+    final screenSize = MediaQuery.of(context).size;
 
     return Center(
-      child: Container(
-        width: widgetWidth,
-        height: widgetHeight,
-        child: buildDecoration(
-          child: Stack(
-            children: [
-              DropzoneView(
-                onCreated: (controller) => this.controller = controller,
-                onDropFile: UploadedFile,
-                onHover: () => setState(() => highlight = true),
-                onLeave: () => setState(() => highlight = false),
-              ),
-              Center(
-                child: SingleChildScrollView(
+      child: Obx(() {
+        return Container(
+          width: screenSize.width * 0.8,
+          height: screenSize.height * 0.3,
+          child: buildDecoration(
+            highlight: highlight.value,
+            child: Stack(
+              children: [
+                DropzoneView(
+                  onCreated: (controller) =>
+                      dropzoneController.value = controller,
+                  onDropFile: UploadedFile,
+                  onHover: () => highlight.value = true,
+                  onLeave: () => highlight.value = false,
+                ),
+                Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.cloud_upload_outlined,
-                        size:
-                            widgetHeight * 0.4, 
+                        size: screenSize.height * 0.1,
                         color: Colors.white,
                       ),
-                      Text(
+                      const Text(
                         'Drop Files Here',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: widgetHeight * 0.1, 
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
-                      SizedBox(
-                        height: widgetHeight * 0.05, 
-                      ),
+                      const SizedBox(height: 10),
                       ElevatedButton.icon(
                         onPressed: () async {
-                          final events = await controller.pickFiles();
-                          if (events.isEmpty) return;
-                          UploadedFile(events.first);
+                          final events =
+                              await dropzoneController.value?.pickFiles();
+                          if (events != null && events.isNotEmpty) {
+                            UploadedFile(events.first);
+                          }
                         },
-                        icon: Icon(
-                          Icons.search,
-                          size: widgetHeight * 0.1, 
-                        ),
-                        label: Text(
-                          'Choose File',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize:
-                                widgetHeight * 0.08, 
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          backgroundColor:
-                              highlight ? Colors.blue : Colors.green.shade300,
-                          shape: const RoundedRectangleBorder(),
-                        ),
-                      )
+                        icon: const Icon(Icons.search),
+                        label: const Text('Choose File'),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  Future UploadedFile(dynamic event) async {
-    final name = event.name;
+  Future<void> UploadedFile(dynamic event) async {
+    if (dropzoneController.value == null) return;
 
-    final mime = await controller.getFileMIME(event);
-    final byte = await controller.getFileSize(event);
-    final url = await controller.createFileUrl(event);
+    final name = event.name;
+    final mime = await dropzoneController.value!.getFileMIME(event);
+    final byte = await dropzoneController.value!.getFileSize(event);
+    final url = await dropzoneController.value!.createFileUrl(event);
 
     final droppedFile =
         File_Data_Model(name: name, mime: mime, bytes: byte, url: url);
+    fileController.setFile(droppedFile);
 
-    widget.onDroppedFile(droppedFile);
-    setState(() {
-      highlight = false;
-    });
+    highlight.value = false;
   }
 
-  Widget buildDecoration({required Widget child}) {
+  Widget buildDecoration({required bool highlight, required Widget child}) {
     final colorBackground = highlight ? Colors.blue : Colors.green;
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),

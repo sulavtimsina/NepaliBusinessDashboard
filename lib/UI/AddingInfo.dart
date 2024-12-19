@@ -57,17 +57,11 @@ class _AddinginfoState extends State<Addinginfo> {
                     Row(
                       children: [
                         Expanded(
-                          child: SizedBox(
-                            height: screenHeight * 0.3,
-                            child: DroppedFileWidget(file: file),
-                          ),
+                          child: DroppedFileWidget(),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
-                          child: DropZoneWidget(
-                            onDroppedFile: (file) =>
-                                setState(() => this.file = file),
-                          ),
+                          child: DropZoneWidget(),
                         ),
                       ],
                     ),
