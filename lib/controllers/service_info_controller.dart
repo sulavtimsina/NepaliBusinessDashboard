@@ -49,6 +49,21 @@ class ServiceInfoController extends GetxController {
     });
   }
 
+  // Update business data
+  Future<void> updateBusiness(
+      String documentId, Map<String, dynamic> updatedData) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Business') // Replace with your collection
+          .doc(documentId)
+          .update(updatedData);
+      fetchBusinessData(); // Refresh data
+      Get.snackbar('Success', 'Business updated successfully.');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to update business: $e');
+    }
+  }
+
   Future<void> deleteBusiness(String documentId) async {
     try {
       await FirebaseFirestore.instance

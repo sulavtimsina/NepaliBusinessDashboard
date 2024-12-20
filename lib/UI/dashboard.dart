@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nepalibussiness/UI/editScreen.dart';
 import 'package:nepalibussiness/controllers/login_controller.dart';
 import 'package:nepalibussiness/controllers/service_info_controller.dart';
 
@@ -76,7 +77,7 @@ class Dashboard extends StatelessWidget {
 
             return Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(28.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
@@ -115,6 +116,8 @@ class Dashboard extends StatelessWidget {
                               Text(
                                   "Location: ${business['Location'] ?? 'N/A'}"),
                               Text("Rating: ${business['Rating'] ?? 'N/A'}"),
+                              Text(
+                                  "Description: ${business['Description'] ?? 'N/A'}"),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +137,14 @@ class Dashboard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Icon(Icons.edit),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  Get.to(() => EditScreen(
+                                        documentId: documentId,
+                                      ));
+                                },
+                              ),
                               IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () {

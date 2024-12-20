@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:nepalibussiness/UI/AddingInfo.dart';
 import 'package:nepalibussiness/UI/dashboard.dart';
+import 'package:nepalibussiness/UI/editScreen.dart';
 import 'package:nepalibussiness/UI/forget_password.dart';
 import 'package:nepalibussiness/UI/registration.dart';
 
@@ -22,7 +23,7 @@ class AppRoutes {
             name: RouteNames.addingDetail,
             page: () => const Addinginfo(),
             transitionDuration: const Duration(milliseconds: 350),
-            transition: Transition.fade),
+            transition: Transition.rightToLeftWithFade),
         GetPage(
             name: RouteNames.reset,
             page: () => const ForgetPassword(),
