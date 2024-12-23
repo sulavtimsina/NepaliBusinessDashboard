@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nepalibussiness/controllers/filecontroller.dart';
 import 'package:nepalibussiness/services/fireStoreServices.dart';
 
 class ServiceInfoController extends GetxController {
+  final TextEditingController imageUrl = TextEditingController();
   final TextEditingController name = TextEditingController();
   final TextEditingController category = TextEditingController();
   final TextEditingController location = TextEditingController();
   final TextEditingController descrpition = TextEditingController();
+  final FileController file = FileController();
 
   var selectedRating = 0.obs;
 
@@ -25,16 +28,18 @@ class ServiceInfoController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+    imageUrl.addListener(_validateFields);
     name.addListener(_validateFields);
     category.addListener(_validateFields);
     location.addListener(_validateFields);
     descrpition.addListener(_validateFields);
+    file.validateFile();
     fetchBusinessData();
   }
 
   void _validateFields() {
     isSaveButtonEnabled.value = name.text.isNotEmpty &&
+        imageUrl.text.isNotEmpty &&
         category.text.isNotEmpty &&
         location.text.isNotEmpty &&
         descrpition.text.isNotEmpty &&
@@ -47,21 +52,6 @@ class ServiceInfoController extends GetxController {
           .map((doc) => {'id': doc.id, ...doc.data() as Map<String, dynamic>})
           .toList();
     });
-  }
-
-  // Update business data
-  Future<void> updateBusiness(
-      String documentId, Map<String, dynamic> updatedData) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('Business') // Replace with your collection
-          .doc(documentId)
-          .update(updatedData);
-      fetchBusinessData(); // Refresh data
-      Get.snackbar('Success', 'Business updated successfully.');
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to update business: $e');
-    }
   }
 
   Future<void> deleteBusiness(String documentId) async {
@@ -83,6 +73,7 @@ class ServiceInfoController extends GetxController {
 
     try {
       await FirebaseFirestore.instance.collection('Business').add({
+        'ImageUrl': imageUrl.text.trim(),
         'Name': name.text.trim(),
         'Category': category.text.trim(),
         'Location': location.text.trim(),
@@ -93,6 +84,7 @@ class ServiceInfoController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
           colorText: Colors.white);
+      imageUrl.clear();
       name.clear();
       category.clear();
       location.clear();

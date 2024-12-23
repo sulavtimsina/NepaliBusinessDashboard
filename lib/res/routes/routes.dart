@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nepalibussiness/UI/AddingInfo.dart';
 import 'package:nepalibussiness/UI/dashboard.dart';
-import 'package:nepalibussiness/UI/editScreen.dart';
 import 'package:nepalibussiness/UI/forget_password.dart';
 import 'package:nepalibussiness/UI/registration.dart';
 

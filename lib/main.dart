@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:nepalibussiness/UI/registration.dart';
 import 'package:nepalibussiness/controllers/filecontroller.dart';
 import 'package:nepalibussiness/res/routes/routes.dart';
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Nepali',
-        home: Registration(),
+        home: const Registration(),
         getPages: AppRoutes.appRoutes());
   }
 }

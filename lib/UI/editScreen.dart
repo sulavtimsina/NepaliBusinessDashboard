@@ -56,20 +56,17 @@ class EditScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
-                          children: [
-                            Expanded(
-                              child: DroppedFileWidget(),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: DropZoneWidget(),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            SizedBox(
+                              width: screenWidth * 0.3,
+                              child: TextFormField(
+                                controller: controller.imageController,
+                                decoration: _inputDecoration(
+                                    utils, 'ImageUrl', 'Image Url'),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
                             SizedBox(
                               width: screenWidth * 0.3,
                               child: TextFormField(
@@ -78,15 +75,6 @@ class EditScreen extends StatelessWidget {
                                     utils, 'Name', 'Business Name'),
                               ),
                             ),
-                            const SizedBox(width: 20),
-                            SizedBox(
-                              width: screenWidth * 0.3,
-                              child: TextFormField(
-                                controller: controller.categoryController,
-                                decoration: _inputDecoration(
-                                    utils, 'Category', 'Business Category'),
-                              ),
-                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -96,14 +84,29 @@ class EditScreen extends StatelessWidget {
                             SizedBox(
                               width: screenWidth * 0.3,
                               child: TextFormField(
-                                controller: controller.locationController,
+                                controller: controller.categoryController,
                                 decoration: _inputDecoration(
-                                    utils, 'Location', 'Business Location'),
+                                    utils, 'Category', 'Business Category'),
                               ),
                             ),
                             const SizedBox(width: 20),
                             SizedBox(
                               width: screenWidth * 0.3,
+                              child: TextFormField(
+                                controller: controller.locationController,
+                                decoration: _inputDecoration(
+                                    utils, 'Location', 'Business Location'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: screenWidth * 0.5,
                               child: TextFormField(
                                 controller: controller.descriptionController,
                                 decoration: _inputDecoration(utils,

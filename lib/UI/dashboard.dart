@@ -100,45 +100,79 @@ class Dashboard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                business['Name'] ?? 'Unknown Name',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                  "Category: ${business['Category'] ?? 'N/A'}"),
-                              Text(
-                                  "Location: ${business['Location'] ?? 'N/A'}"),
-                              Text("Rating: ${business['Rating'] ?? 'N/A'}"),
-                              Text(
-                                  "Description: ${business['Description'] ?? 'N/A'}"),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(5, (i) {
-                                  if (i < business['Rating']) {
-                                    return const Icon(Icons.star,
-                                        color: Colors.yellow, size: 20);
-                                  } else {
-                                    return const Icon(Icons.star_border,
-                                        color: Colors.grey, size: 20);
-                                  }
-                                }),
-                              ),
-                            ],
+                          business['ImageUrl'] != null &&
+                                  business['ImageUrl'].isNotEmpty
+                              ? Image.network(
+                                  business['ImageUrl'],
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Icon(Icons.broken_image,
+                                        size: 80);
+                                  },
+                                )
+                              : const Icon(Icons.image_not_supported, size: 80),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  business['Name'] ?? 'Unknown Name',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  "Category: ${business['Category'] ?? 'N/A'}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                                Text(
+                                  "Location: ${business['Location'] ?? 'N/A'}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                                Text(
+                                  "Rating: ${business['Rating'] ?? 'N/A'}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                                Text(
+                                  "Description: ${business['Description'] ?? 'N/A'}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(5, (i) {
+                                    if (i < business['Rating']) {
+                                      return const Icon(Icons.star,
+                                          color: Colors.yellow, size: 20);
+                                    } else {
+                                      return const Icon(Icons.star_border,
+                                          color: Colors.grey, size: 20);
+                                    }
+                                  }),
+                                ),
+                              ],
+                            ),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.edit),
+                                icon: const Icon(Icons.edit),
                                 onPressed: () {
                                   Get.to(() => EditScreen(
                                         documentId: documentId,

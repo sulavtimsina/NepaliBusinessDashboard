@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BusinessController extends GetxController {
+  final imageController = TextEditingController();
   final nameController = TextEditingController();
   final categoryController = TextEditingController();
   final locationController = TextEditingController();
@@ -37,7 +38,7 @@ class BusinessController extends GetxController {
 
       if (snapshot.exists) {
         final data = snapshot.data() as Map<String, dynamic>;
-
+        imageController.text = data['ImageUrl'] ?? '';
         nameController.text = data['Name'] ?? '';
         categoryController.text = data['Category'] ?? '';
         locationController.text = data['Location'] ?? '';
@@ -61,6 +62,7 @@ class BusinessController extends GetxController {
           .collection('Business')
           .doc(documentId)
           .update({
+        'ImageUrl': imageController.text.trim(),
         'Name': nameController.text.trim(),
         'Category': categoryController.text.trim(),
         'Location': locationController.text.trim(),
@@ -80,6 +82,7 @@ class BusinessController extends GetxController {
 
   @override
   void onClose() {
+    imageController.dispose();
     nameController.dispose();
     categoryController.dispose();
     locationController.dispose();
