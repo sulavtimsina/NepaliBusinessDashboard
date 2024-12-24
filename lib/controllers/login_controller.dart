@@ -41,6 +41,8 @@ class LoginController extends GetxController {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       Get.toNamed('/dashboard');
+      emailController.clear();
+      passwordController.clear();
     } on FirebaseAuthException catch (e) {
       // Handle specific Firebase exceptions
       if (e.code == 'user-not-found') {

@@ -241,24 +241,30 @@ class _AddinginfoState extends State<Addinginfo> {
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
-                          width: screenWidth * 0.25,
+                          width:
+                              screenWidth * 0.3, // Adjust the width as needed
                           height: 45,
                           child: Obx(() {
-                            if (services_controller.isLoading.value) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: Color.fromARGB(255, 38, 99, 40),
-                                  strokeWidth: 2.5,
-                                ),
-                              );
-                            }
-
-                            return ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: utils.pimaryColor,
-                              ),
-                              onPressed:
-                                  services_controller.isSaveButtonEnabled.value
+                            return Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(screenWidth * 0.3,
+                                        45), // Set minimum width and height
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    backgroundColor:
+                                        utils.pimaryColor.withOpacity(
+                                      services_controller.isLoading.value
+                                          ? 0.5
+                                          : 1.0, // Fade effect
+                                    ),
+                                  ),
+                                  onPressed: services_controller
+                                              .isSaveButtonEnabled.value &&
+                                          !services_controller.isLoading.value
                                       ? () async {
                                           services_controller.isLoading.value =
                                               true;
@@ -267,17 +273,31 @@ class _AddinginfoState extends State<Addinginfo> {
                                           services_controller.isLoading.value =
                                               false;
                                         }
-                                      : null,
-                              child: const Text(
-                                'Add',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 32, 77, 34),
-                                  fontWeight: FontWeight.bold,
+                                      : null, // Disable the button when loading
+                                  child: services_controller.isLoading.value
+                                      ? const SizedBox(
+                                          width:
+                                              24, // Adjust size of the CircularProgressIndicator
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                            color:
+                                                Color.fromARGB(255, 38, 99, 40),
+                                            strokeWidth: 2.5,
+                                          ),
+                                        )
+                                      : const Text(
+                                          'Add',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 32, 77, 34),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                 ),
-                              ),
+                              ],
                             );
                           }),
-                        )
+                        ),
                       ],
                     ),
                   ),

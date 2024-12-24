@@ -148,22 +148,41 @@ class EditScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           SizedBox(
-                            width: screenWidth * 0.25,
+                            width: screenWidth * 0.3,
                             height: 45,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: utils.pimaryColor,
-                              ),
-                              onPressed: () =>
-                                  controller.updateBusiness(documentId),
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 32, 77, 34),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                            child: Obx(() => ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    backgroundColor: utils.pimaryColor,
+                                  ),
+                                  onPressed: controller.isLoading.value
+                                      ? null
+                                      : () async {
+                                          controller.isLoading.value = true;
+                                          await controller
+                                              .updateBusiness(documentId);
+                                          controller.isLoading.value = false;
+                                        },
+                                  child: controller.isLoading.value
+                                      ? const SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2.0,
+                                            color: Color(0xff114c2b),
+                                          ),
+                                        )
+                                      : const Text(
+                                          'Save',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 32, 77, 34),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                )),
                           ),
                         ],
                       ),
