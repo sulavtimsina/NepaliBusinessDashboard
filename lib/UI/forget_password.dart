@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -115,11 +116,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               : const Text(
                                   'Reset',
                                   style: TextStyle(
-                                      color: Color.fromARGB(255, 26, 59, 27)),
+                                      color: Color.fromARGB(255, 32, 83, 34),
+                                      fontWeight: FontWeight.bold),
                                 ),
                         ),
                       );
-                    })
+                    }),
+                    const SizedBox(height: 14),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed('/loginScreen');
+                      },
+                      child: const Text(
+                        'Return to Login?',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 32, 83, 34),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
                 ),
               ),

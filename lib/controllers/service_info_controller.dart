@@ -13,6 +13,7 @@ class ServiceInfoController extends GetxController {
   final FileController file = FileController();
 
   var selectedRating = 0.obs;
+  var isLoading = false.obs;
 
   RxBool isSaveButtonEnabled = false.obs;
   RxList<Map<String, dynamic>> businessData = <Map<String, dynamic>>[].obs;
@@ -69,6 +70,7 @@ class ServiceInfoController extends GetxController {
   }
 
   Future<void> saveDataToFirestore() async {
+    isLoading.value = true;
     if (!isSaveButtonEnabled.value) return;
 
     try {
@@ -80,10 +82,11 @@ class ServiceInfoController extends GetxController {
         'Description': descrpition.text.trim(),
         'Rating': selectedRating.value, // Save rating
       });
-      Get.snackbar("Success", "Data saved successfully!",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white);
+      Get.snackbar(
+        "Success",
+        "Data saved successfully!",
+        snackPosition: SnackPosition.TOP,
+      );
       imageUrl.clear();
       name.clear();
       category.clear();
@@ -93,9 +96,11 @@ class ServiceInfoController extends GetxController {
       Get.toNamed('/dashboard');
     } catch (e) {
       Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
+    } finally {
+      isLoading.value = false;
     }
   }
 }

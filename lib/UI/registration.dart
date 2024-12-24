@@ -139,9 +139,11 @@ class _RegistrationState extends State<Registration> {
                       onTap: () {
                         Get.toNamed('/reset');
                       },
-                      child: Text(
+                      child: const Text(
                         'Forget Password?',
-                        style: TextStyle(color: Colors.green[900]),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 32, 83, 34),
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     const SizedBox(height: 24),

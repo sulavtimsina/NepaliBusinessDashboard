@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nepalibussiness/UI/editScreen.dart';
@@ -12,72 +13,44 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Utils utils = Utils();
-    final screenSize = MediaQuery.of(context).size;
-    final screenWidth = screenSize.width;
-    final screenHeight = screenSize.height;
+
     final ServiceInfoController services_controller =
         Get.put(ServiceInfoController());
     final LoginController login_controller = Get.put(LoginController());
 
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: screenWidth,
-            height: screenHeight * 0.15,
-            color: utils.pimaryColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        utils.name.toString(),
-                        style: TextStyle(
-                          color: utils.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                      Text(
-                        utils.greeting1,
-                        style: TextStyle(
-                          color: utils.textColor,
-                          fontWeight: FontWeight.w100,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: IconButton(
-                    onPressed: () {
-                      login_controller.signOut();
-                    },
-                    icon: Icon(
-                      Icons.logout,
-                      color: utils.textColor,
-                      size: 28,
-                    ),
-                    tooltip: "Logout",
-                  ),
-                ),
-              ],
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+        backgroundColor: utils.pimaryColor,
+        centerTitle: true,
+        automaticallyImplyLeading: false, // Removes the back button from AppBar
+
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: IconButton(
+              onPressed: () {
+                login_controller.signOut();
+              },
+              icon: Icon(
+                Icons.logout,
+                color: utils.textColor,
+                size: 28,
+              ),
+              tooltip: "Logout",
             ),
           ),
+        ],
+      ),
+      body: Column(
+        children: [
           Obx(() {
             if (services_controller.businessData.isEmpty) {
               return const Center(child: Text("No business data available."));
             }
-
             return Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(28.0),
+                padding: const EdgeInsets.all(28.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
@@ -97,20 +70,26 @@ class Dashboard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           business['ImageUrl'] != null &&
                                   business['ImageUrl'].isNotEmpty
-                              ? Image.network(
-                                  business['ImageUrl'],
+                              ? CachedNetworkImage(
+                                  imageUrl: business['ImageUrl'],
                                   width: 80,
                                   height: 80,
                                   fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Icon(Icons.broken_image,
-                                        size: 80);
-                                  },
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xff114c2b),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    Icons.broken_image,
+                                    size: 80,
+                                  ),
                                 )
                               : const Icon(Icons.image_not_supported, size: 80),
                           const SizedBox(width: 10),
@@ -131,26 +110,26 @@ class Dashboard extends StatelessWidget {
                                   "Category: ${business['Category'] ?? 'N/A'}",
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 10),
+                                      fontSize: 14),
                                 ),
-                                Text(
-                                  "Location: ${business['Location'] ?? 'N/A'}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
-                                ),
-                                Text(
-                                  "Rating: ${business['Rating'] ?? 'N/A'}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
-                                ),
-                                Text(
-                                  "Description: ${business['Description'] ?? 'N/A'}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
-                                ),
+                                // Text(
+                                //   "Location: ${business['Location'] ?? 'N/A'}",
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.bold,
+                                //       fontSize: 14),
+                                // ),
+                                // Text(
+                                //   "Rating: ${business['Rating'] ?? 'N/A'}",
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.bold,
+                                //       fontSize: 14),
+                                // ),
+                                // Text(
+                                //   "Description: ${business['Description'] ?? 'N/A'}",
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.bold,
+                                //       fontSize: 10),
+                                // ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
