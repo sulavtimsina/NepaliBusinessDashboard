@@ -11,12 +11,12 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: "AIzaSyDvXxKLp0Wos21MSBXlZM4AOMLhN6TdNL4",
-            authDomain: "nepalibusiness-8c8a0.firebaseapp.com",
-            projectId: "nepalibusiness-8c8a0",
-            storageBucket: "nepalibusiness-8c8a0.firebasestorage.app",
-            messagingSenderId: "157850856962",
-            appId: "1:157850856962:web:6db1a334f7a742a383c11b"));
+            apiKey: "AIzaSyBSfoSmGwL_H1hd_xC3ZStkzIhJLonz_d8",
+            authDomain: "nepali-business.firebaseapp.com",
+            projectId: "nepali-business",
+            storageBucket: "nepali-business.firebasestorage.app",
+            messagingSenderId: "92485715753",
+            appId: "1:92485715753:web:c96d088ce189f1b627d938"));
   } else {
     await Firebase.initializeApp();
   }
