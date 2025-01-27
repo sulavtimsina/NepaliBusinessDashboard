@@ -15,7 +15,7 @@ void main() async {
             authDomain: "nepali-business.firebaseapp.com",
             projectId: "nepali-business",
             storageBucket: "nepali-business.firebasestorage.app",
-            messagingSenderId: "92485715753",
+            messagingSenderId: "92485715753", 
             appId: "1:92485715753:web:c96d088ce189f1b627d938"));
   } else {
     await Firebase.initializeApp();

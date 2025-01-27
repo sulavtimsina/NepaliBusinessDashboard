@@ -10,6 +10,22 @@ class ServiceInfoController extends GetxController {
   final TextEditingController category = TextEditingController();
   final TextEditingController location = TextEditingController();
   final TextEditingController descrpition = TextEditingController();
+  final TextEditingController ownerName = TextEditingController();
+  final TextEditingController contactNumber = TextEditingController();
+  final TextEditingController emailAddress = TextEditingController();
+  final TextEditingController websiteURL = TextEditingController();
+  final TextEditingController facebook = TextEditingController();
+  final TextEditingController instagram = TextEditingController();
+  final TextEditingController city = TextEditingController();
+  final TextEditingController state = TextEditingController();
+  final TextEditingController zipCode = TextEditingController();
+  final TextEditingController country = TextEditingController();
+  final TextEditingController languageSpoken = TextEditingController();
+  final TextEditingController operatingHours = TextEditingController();
+  final TextEditingController paymentMethod = TextEditingController();
+  final TextEditingController specialOffers = TextEditingController();
+  final TextEditingController verificationStatus = TextEditingController();
+
   final FileController file = FileController();
 
   var selectedRating = 0.obs;
@@ -80,7 +96,22 @@ class ServiceInfoController extends GetxController {
         'Category': category.text.trim(),
         'Location': location.text.trim(),
         'Description': descrpition.text.trim(),
-        'Rating': selectedRating.value, // Save rating
+        'Rating': selectedRating.value,
+        'OwnerName': ownerName.text.trim(),
+        'ContactNumber': contactNumber.text.trim(),
+        'EmailAddress': emailAddress.text.trim(),
+        'WebsiteURL': websiteURL.text.trim(),
+        'Facebook': facebook.text.trim(),
+        'Instagram': instagram.text.trim(),
+        'City': city.text.trim(),
+        'StateRegion': state.text.trim(),
+        'Zipcode': zipCode.text.trim(),
+        'Country': country.text.trim(),
+        'LanguageSpoken': languageSpoken.text.trim(),
+        'OperatingHours': operatingHours.text.trim(),
+        'PaymentMethods': paymentMethod.text.trim(),
+        'SpecialOffers': specialOffers.text.trim(),
+        'VerificationStatus': verificationStatus.text.trim(),
       });
       Get.snackbar(
         "Success",
@@ -92,6 +123,21 @@ class ServiceInfoController extends GetxController {
       category.clear();
       location.clear();
       descrpition.clear();
+      ownerName.clear();
+      contactNumber.clear();
+      emailAddress.clear();
+      websiteURL.clear();
+      facebook.clear();
+      instagram.clear();
+      city.clear();
+      state.clear();
+      zipCode.clear();
+      country.clear();
+      languageSpoken.clear();
+      operatingHours.clear();
+      paymentMethod.clear();
+      specialOffers.clear();
+      verificationStatus.clear();
       selectedRating.value = 0;
       Get.toNamed('/dashboard');
     } catch (e) {
