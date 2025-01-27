@@ -10,3 +10,4 @@ class Utils {
   String get greeting1 => "Welcome to $pageName";
   String get detail => "Add Details";
 }
+
